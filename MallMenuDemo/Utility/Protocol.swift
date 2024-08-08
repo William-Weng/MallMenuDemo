@@ -16,6 +16,9 @@ protocol CellReusable: AnyObject {
     /// Cell的相關設定
     /// - Parameter indexPath: IndexPath
     func configure(with indexPath: IndexPath)
+    
+    /// 設定背景色
+    func setBackgroundColor()
 }
 
 // MARK: - 預設 identifier = class name (初值)

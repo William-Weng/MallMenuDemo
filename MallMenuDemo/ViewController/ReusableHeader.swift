@@ -29,8 +29,11 @@ final class ReusableHeader: UICollectionReusableView, CellReusable, NibOwnerLoad
     }
     
     func configure(with indexPath: IndexPath) {
-        backgroundColor = .lightGray
         self.indexPath = indexPath
         myLabel.text = "細項\(indexPath.section + 1)"
+    }
+    
+    func setBackgroundColor() {
+        backgroundColor = .lightGray
     }
 }

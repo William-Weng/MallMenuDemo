@@ -63,7 +63,17 @@ extension ViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionViewAction(collectionView, didSelectItemAt: indexPath)
     }
-        
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let itemCell = cell as? CellReusable else { return }
+        itemCell.setBackgroundColor()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        guard let headerView = view as? CellReusable else { return }
+        headerView.setBackgroundColor()
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollViewDidScrollAction(scrollView)
     }
@@ -138,6 +148,8 @@ private extension ViewController {
     /// - Parameter indexPath: IndexPath
     func tagCollectionViewSetting(with indexPath: IndexPath) {
         
+        if (indexPath == TagCell.selectedIndexPath) { return }
+        
         let cell = tagCollectionView.cellForItem(at: indexPath) as? TagCell
         
         TagCell.selectedIndexPath = indexPath
@@ -202,7 +214,7 @@ private extension ViewController {
         guard let type = CollectionViewType(rawValue: collectionView.tag) else { fatalError() }
 
         let cell: UICollectionViewCell & CellReusable
-                
+        
         switch type {
         case .item: cell = collectionView._reusableCell(at: indexPath) as ItemCell
         case .tag: cell = collectionView._reusableCell(at: indexPath) as TagCell
@@ -279,7 +291,7 @@ private extension ViewController {
         case .item: break
         case .tag: break
         case .content:
-                        
+            
             let supplementaryView = contentCollectionView.visibleSupplementaryViews(ofKind: "\(WWCompositionalLayout.ReusableSupplementaryViewKind.header)").min { view1, view2 in
                 view1.frame.minY < view2.frame.minY
             }

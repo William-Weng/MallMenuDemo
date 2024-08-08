@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WWPrint
 
 final class ItemCell: UICollectionViewCell, CellReusable {
     
@@ -17,7 +18,7 @@ final class ItemCell: UICollectionViewCell, CellReusable {
     var indexPath: IndexPath = .init()
     
     @IBOutlet weak var titleLabel: UILabel!
-
+        
     func configure(with indexPath: IndexPath) {
         self.indexPath = indexPath
         titleLabel.text = "分類\(indexPath.row + 1)"
@@ -25,8 +26,7 @@ final class ItemCell: UICollectionViewCell, CellReusable {
     }
     
     func setBackgroundColor() {
-        backgroundColor = .yellow
-        if (indexPath != Self.selectedIndexPath) { backgroundColor = backgroundColor?.withAlphaComponent(0.3) }
+        backgroundColor = (indexPath == Self.selectedIndexPath) ? .yellow : .yellow.withAlphaComponent(0.3)
     }
 }
 
@@ -37,7 +37,7 @@ final class TagCell: UICollectionViewCell, CellReusable {
     var indexPath: IndexPath = .init()
     
     @IBOutlet weak var titleLabel: UILabel!
-    
+        
     func configure(with indexPath: IndexPath) {
         
         self.indexPath = indexPath
@@ -59,6 +59,9 @@ final class ContentCell: UICollectionViewCell, CellReusable {
     
     func configure(with indexPath: IndexPath) {
         titleLabel.text = "分類\(ItemCell.selectedIndexPath.row + 1) - 內容\(indexPath.row + 1)"
+    }
+    
+    func setBackgroundColor() {
         backgroundColor = ItemCell.colors2[ItemCell.selectedIndexPath.row % ItemCell.colors2.count]
     }
 }
